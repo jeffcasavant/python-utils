@@ -11,10 +11,7 @@ pid = str(os.getpid())
 
 def use(allow_duplicates=False, continue_on_error=True):
 	if not os.path.exists(pidfile):
-		pf = open(pidfile, 'w')
-		pf.write(pid)
-		pf.close()
-		atexit.register(exit)
+		create_pidfile()
 	else:
 		if running():
 			print "%s already running!" % sys.argv[0]
@@ -24,12 +21,16 @@ def use(allow_duplicates=False, continue_on_error=True):
 			print "Previous %s left pidfile - probably terminated unexpectedly!" % sys.argv[0]
 			os.remove(pidfile)
 			if continue_on_error:
-				pf = open(pidfile, 'w')
-				pf.write(pid)
-				pf.close()
-				atexit.register(exit)
+				create_pidfile()
 			else:
 				sys.exit(1)
+
+def create_pidfile():
+	pf = open(pidfile, 'w')
+	pf.write(pid)
+	pf.close()
+	# Delete pidfile on sys.exit()
+	atexit.register(exit)
 
 def running():
 	pf = open(pidfile, 'r')
