@@ -21,11 +21,12 @@ pidfilePath = "/tmp/"
 pidfile = pidfilePath + sys.argv[0] + ".pid"
 pid = str(os.getpid())
 
+# Function called from script
 def use(allow_duplicates=False, continue_on_error=True):
 	if not os.path.exists(pidfile):
-		create_pidfile()
+		_create_pidfile()
 	else:
-		if running():
+		if _running():
 			print "%s already running!" % sys.argv[0]
 			if not allow_duplicates:
 				sys.exit(1)
@@ -33,23 +34,23 @@ def use(allow_duplicates=False, continue_on_error=True):
 			print "Previous %s left pidfile - probably terminated unexpectedly!" % sys.argv[0]
 			os.remove(pidfile)
 			if continue_on_error:
-				create_pidfile()
+				_create_pidfile()
 			else:
 				sys.exit(1)
 
-def create_pidfile():
+def _create_pidfile():
 	pf = open(pidfile, 'w')
 	pf.write(pid)
 	pf.close()
-	# Delete pidfile on sys.exit()
-	atexit.register(exit)
+	# Delete pidfile on exit()
+	atexit.register(_exit)
 
-def running():
+def _running():
 	pf = open(pidfile, 'r')
 	pid = pf.read()
 	pf.close()
 	return os.path.exists("/proc/" + pid)
 
-def exit():
-	if not running():
+def _exit():
+	if not _running():
 		os.remove(pidfile)
