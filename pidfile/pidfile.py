@@ -4,7 +4,7 @@
 # Call pidfile.use() in the beginning of your script
 #
 # Options:
-# allow_duplicates 
+# allow_multiple_instances 
 #	Allow multiple instances of the same script
 #	Default False
 #
@@ -22,13 +22,13 @@ pidfile = pidfilePath + sys.argv[0] + ".pid"
 pid = str(os.getpid())
 
 # Function to be called externally
-def use(allow_duplicates=False, continue_on_error=True):
+def use(allow_multiple_instances=False, continue_on_error=True):
 	if not os.path.exists(pidfile):
 		_create_pidfile()
 	else:
 		if _running():
 			print "%s already running!" % sys.argv[0]
-			if not allow_duplicates:
+			if not allow_multiple_instances:
 				sys.exit(1)
 		else:
 			print "Previous %s left pidfile - probably terminated unexpectedly!" % sys.argv[0]
