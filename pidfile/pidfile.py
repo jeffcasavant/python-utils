@@ -21,7 +21,7 @@ pidfilePath = "/tmp/"
 pidfile = pidfilePath + sys.argv[0] + ".pid"
 pid = str(os.getpid())
 
-# Function called from script
+# Function to be called externally
 def use(allow_duplicates=False, continue_on_error=True):
 	if not os.path.exists(pidfile):
 		_create_pidfile()
