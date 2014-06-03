@@ -24,10 +24,10 @@ def use(continue_on_error=True):
 		_create_pidfile()
 	else:
 		if _running():
-			print "%s already running!" % sys.argv[0]
+			print "%s already running!" % sys.argv[0] 
 			sys.exit(1)
 		else:
-			print "Previous %s left pidfile - probably terminated unexpectedly!" % sys.argv[0]
+			print "Previous %s left pidfile (terminated unexpectedly)!" % sys.argv[0]
 			os.remove(pidfile)
 			if continue_on_error:
 				_create_pidfile()
