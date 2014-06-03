@@ -1,7 +1,7 @@
 # Pidfile module
 
 # Use: 
-# Call pidfile.use() in the beginning of your script
+# Call pidfile.use(option=value) in the beginning of your script
 #
 # Options:
 #
