@@ -46,6 +46,7 @@ def use(continue_on_error=True, pidfilePath="/tmp/"):
 def _create_pidfile():
 	try:
 		pf = open(pidfile, 'w')
+		os.chmod(pidfile, 0644)
 		pf.write(pid)
 		pf.close()
 		# Delete pidfile on exit()
