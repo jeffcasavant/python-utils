@@ -23,14 +23,13 @@ if not os.path.exists(pidfile):
 	pf.write(pid)
 	pf.close()
 
-	# Do processing
+	# Simulate processing
+	sleep(15)
 
 	# Catch Exception, e:
 		# handling
 		# os.remove(pidfile)
 		# sys.exit(1)
-
-	sleep(15)
 
 	os.remove(pidfile)
 	sys.exit(0)
