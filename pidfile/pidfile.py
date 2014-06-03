@@ -29,7 +29,7 @@ def use(continue_on_error=True, pidfilePath="/tmp/"):
 	
 	pidfile = pidfilePath + sys.argv[0] + ".pid"
 	
-	if not os.access(pidfile):
+	if not os.access(pidfile, os.R_OK):
 		_create_pidfile()
 	else:
 		if _running():
@@ -54,7 +54,7 @@ def _create_pidfile():
 		if os.path.exists(pidfile):
 			uid = os.stat(pidfile).st_uid
 			name = pwd.getpwuid(uid)
-			print "Could not write to %s: owned by UID %s %s" % (pidfile, uid, name)
+			print "Could not write to %s: file exists, owned by UID %s %s" % (pidfile, uid, name)
 		else:
 			print "Could not write to %s" % pidfile
 
