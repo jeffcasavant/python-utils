@@ -4,10 +4,10 @@
 
 import sys
 
-import pidfile
-
 # For simulation purposes only
 from time import sleep
+
+import pidfile
 
 pidfile.use()
 
