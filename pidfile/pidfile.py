@@ -1,5 +1,15 @@
 # Pidfile module
 
+# Use: 
+# Call pidfile.use() in the beginning of your script
+# Options:
+# allow_duplicates 
+#	Allow multiple instances of the same script
+#	Default False
+# continue_on_error
+#	Continue if we find a "zombie" pidfile; if False then sys.exit(1)
+# 	Default True
+
 import os
 import sys
 import atexit
