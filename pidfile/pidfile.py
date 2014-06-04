@@ -37,7 +37,13 @@ def use(continueOnError=True, pidfilePath="/tmp/"):
 			sys.exit(1)
 		else:
 			print "Previous %s left pidfile (terminated unexpectedly)!" % sys.argv[0]
-			os.remove(pidfile)
+
+			try:
+				os.remove(pidfile)
+			except Exception, e:
+				info = _owner_info(pidfile)
+				print "Could not remove %s: owned by UID %s '%s' with umask %s" % (pidfile, info['uid'], info['name'], info['umask'])
+
 			if continueOnError:
 				_create_pidfile()
 			else:
@@ -53,9 +59,8 @@ def _create_pidfile():
 		atexit.register(_exit)
 	except Exception, e:
 		if os.path.exists(pidfile):
-			uid = os.stat(pidfile).st_uid
-			name = pwd.getpwuid(uid)
-			print "Could not write to %s: file exists, owned by UID %s %s" % (pidfile, uid, name)
+			info = _owner_info(pidfile)
+			print "Could not write to %s: file exists, owned by UID %s '%s' with umask %s" % (pidfile, info['uid'], info['name'], info['umask'])
 		else:
 			print "Could not write to %s" % pidfile
 
@@ -65,6 +70,13 @@ def _running():
 	pid = pf.read()
 	pf.close()
 	return os.path.exists("/proc/" + pid)
+
+def _owner_info(filepath):
+	uid = os.stat(pidfile).st_uid
+	name = pwd.getpwuid(uid)
+	umask = os.umask(0)
+	os.umask(umask)
+	return {'uid' = uid, 'name' = name, 'umask' = umask)
 
 def _exit():
 	if not _running():
