@@ -21,6 +21,7 @@ import os
 import sys
 import pwd
 import atexit
+from datetime import date
 
 # Location of pidfile
 pidfilePath = "/tmp/"
