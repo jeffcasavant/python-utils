@@ -38,7 +38,7 @@ def use(continueOnError=True, pidfilePath="/tmp/"):
 		else:
 			print "Previous %s left pidfile (terminated unexpectedly)!" % sys.argv[0]
 			os.remove(pidfile)
-			if continue_on_error:
+			if continueOnError:
 				_create_pidfile()
 			else:
 				sys.exit(1)

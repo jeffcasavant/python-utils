@@ -9,7 +9,7 @@ from time import sleep
 
 import pidfile
 
-pidfile.use()
+pidfile.use(continueOnError=False)
 
 # Simulate processing
 sleep(15)
