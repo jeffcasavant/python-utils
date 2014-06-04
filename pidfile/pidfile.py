@@ -26,9 +26,9 @@ pid = str(os.getpid())
 
 # Function to be called externally
 def use(continueOnError=True, pidfilePath="/tmp/"):
-	
+
 	pidfile = pidfilePath + sys.argv[0] + ".pid"
-	
+
 	if not os.access(pidfile, os.R_OK):
 		_create_pidfile()
 	else:
@@ -76,7 +76,7 @@ def _owner_info(filepath):
 	name = pwd.getpwuid(uid)
 	umask = os.umask(0)
 	os.umask(umask)
-	return {'uid' = uid, 'name' = name, 'umask' = umask)
+	return {'uid' : uid, 'name' : name, 'umask' : umask}
 
 def _exit():
 	if not _running():
