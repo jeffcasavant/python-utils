@@ -1,5 +1,8 @@
 # Pidfile module
 
+# Creates a lockfile in a specified directory in order to prevent multiple
+# instances of the same script
+
 # Use: 
 # Call pidfile.use(option=value) in the beginning of your script
 #
@@ -25,6 +28,8 @@ pidfile = pidfilePath + sys.argv[0] + ".pid"
 pid = str(os.getpid())
 
 # Function to be called externally
+# Performs logic to quit program based on the state of the pidfile and the
+# configuration options
 def use(continueOnError=True, pidfilePath="/tmp/"):
 
 	pidfile = pidfilePath + sys.argv[0] + ".pid"
@@ -49,6 +54,7 @@ def use(continueOnError=True, pidfilePath="/tmp/"):
 			else:
 				sys.exit(1)
 
+# Attempts to write the pidfile - if it fails, prints owner information
 def _create_pidfile():
 	try:
 		pf = open(pidfile, 'w')
@@ -64,19 +70,22 @@ def _create_pidfile():
 		else:
 			print "Could not write to %s" % pidfile
 
-
+# Using the PID in the pidfile, checks whether the process is running
 def _running():
 	pf = open(pidfile, 'r')
 	pid = pf.read()
 	pf.close()
 	return os.path.exists("/proc/" + pid)
 
+# Returns a dict contaning owner UID and name for a file
 def _owner_info(filepath):
 	uid = os.stat(pidfile).st_uid
 	name = pwd.getpwuid(uid)
 
 	return {'uid' : uid, 'name' : name}
 
+# Wrapper function that only removes the pidfile on exit if it's no longer
+# needed
 def _exit():
 	if not _running():
 		os.remove(pidfile)
