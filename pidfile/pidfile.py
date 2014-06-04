@@ -42,7 +42,7 @@ def use(continueOnError=True, pidfilePath="/tmp/"):
 				os.remove(pidfile)
 			except Exception, e:
 				info = _owner_info(pidfile)
-				print "Could not remove %s: owned by UID %s '%s' with umask %s" % (pidfile, info['uid'], info['name'], info['umask'])
+				print "Could not remove %s: owned by UID %s '%s'" % (pidfile, info['uid'], info['name'])
 
 			if continueOnError:
 				_create_pidfile()
@@ -60,7 +60,7 @@ def _create_pidfile():
 	except Exception, e:
 		if os.path.exists(pidfile):
 			info = _owner_info(pidfile)
-			print "Could not write to %s: file exists, owned by UID %s '%s' with umask %s" % (pidfile, info['uid'], info['name'], info['umask'])
+			print "Could not write to %s: file exists, owned by UID %s '%s'" % (pidfile, info['uid'], info['name'])
 		else:
 			print "Could not write to %s" % pidfile
 
@@ -74,9 +74,8 @@ def _running():
 def _owner_info(filepath):
 	uid = os.stat(pidfile).st_uid
 	name = pwd.getpwuid(uid)
-	umask = os.umask(0)
-	os.umask(umask)
-	return {'uid' : uid, 'name' : name, 'umask' : umask}
+
+	return {'uid' : uid, 'name' : name}
 
 def _exit():
 	if not _running():
