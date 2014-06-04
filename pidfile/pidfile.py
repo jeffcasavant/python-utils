@@ -5,7 +5,7 @@
 #
 # Options:
 #
-# continue_on_error
+# continueOnError
 #	Continue if we find a "zombie" pidfile; if False then sys.exit(1)
 # 	Default True
 # pidfilePath
@@ -25,7 +25,7 @@ pidfile = pidfilePath + sys.argv[0] + ".pid"
 pid = str(os.getpid())
 
 # Function to be called externally
-def use(continue_on_error=True, pidfilePath="/tmp/"):
+def use(continueOnError=True, pidfilePath="/tmp/"):
 	
 	pidfile = pidfilePath + sys.argv[0] + ".pid"
 	
