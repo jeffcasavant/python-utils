@@ -24,7 +24,8 @@ import atexit
 
 # Location of pidfile
 pidfilePath = "/tmp/"
-pidfile = pidfilePath + sys.argv[0] + ".pid"
+pidfileName = ''.join(sys.argv[0].split('/')[-1:])
+pidfile = pidfilePath + pidfileName + ".pid"
 pid = str(os.getpid())
 
 # Function to be called externally
@@ -32,7 +33,7 @@ pid = str(os.getpid())
 # configuration options
 def use(continueOnError=True, pidfilePath="/tmp/"):
 
-	pidfile = pidfilePath + sys.argv[0] + ".pid"
+	pidfile = pidfilePath + pidfileName + ".pid"
 
 	if not os.access(pidfile, os.R_OK):
 		_create_pidfile()
