@@ -74,9 +74,9 @@ def _create_pidfile():
 # Using the PID in the pidfile, checks whether the process is running
 def _running():
 	pf = open(pidfile, 'r')
-	pid = pf.read()
+	pfpid = pf.read()
 	pf.close()
-	return os.path.exists("/proc/" + pid)
+	return os.path.exists("/proc/" + pfpid)
 
 # Returns a dict contaning owner UID and name for a file
 def _owner_info(filepath):
@@ -88,5 +88,9 @@ def _owner_info(filepath):
 # Wrapper function that only removes the pidfile on exit if it's no longer
 # needed
 def _exit():
-	if not _running():
+	pf = open(pidfile, 'r')
+	pfpid = pf.read()
+	pf.close()
+	# If script pid matches pidfile pid, it belongs to the script
+	if pid == pfpid:
 		os.remove(pidfile)

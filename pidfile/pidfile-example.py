@@ -9,9 +9,9 @@ from time import sleep
 
 import pidfile
 
-pidfile.use(continueOnError=False)
+pidfile.use()
 
 # Simulate processing
-sleep(15)
+sleep(45)
 
 sys.exit(0)
