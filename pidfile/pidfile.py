@@ -81,7 +81,7 @@ def _running():
 # Returns a dict contaning owner UID and name for a file
 def _owner_info(filepath):
 	uid = os.stat(pidfile).st_uid
-	name = pwd.getpwuid(uid)
+	name = pwd.getpwuid(uid).pw_gecos
 
 	return {'uid' : uid, 'name' : name}
 
