@@ -24,7 +24,7 @@ import atexit
 
 # Location of pidfile
 pidfilePath = "/tmp/"
-pidfileName = ''.join(sys.argv[0].split('/')[-1:])
+pidfileName = ''.join(sys.argv[0].split('/')[-1])
 pidfile = pidfilePath + pidfileName + ".pid"
 pid = str(os.getpid())
 
