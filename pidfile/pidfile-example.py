@@ -12,8 +12,6 @@ import pidfile
 pidfile.use()
 
 # Simulate processing
-#sleep(5)
-
-print pidfile._owner_info(pidfile.pidfile)
+sleep(15)
 
 sys.exit(0)
