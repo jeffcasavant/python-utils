@@ -13,6 +13,9 @@ parser = argparse.ArgumentParser(
 parser.add_argument('-m', '--max', type=int, metavar='N', 
 	help='Number to stop at. (N>=1)', required=True)
 
+parser.add_argument('-6', '--skip6', action='store_true', default=False,
+	help='Skip numbers divisible by 6.')
+
 parser.add_argument('-o', '--out', help='Output filename', required=True)
 
 args = parser.parse_args()
@@ -25,15 +28,16 @@ nodes = []
 ## Return next number in Collatz sequence
 
 def collatz_draw(n):
-	if not n in nodes:
-		graph.node('%d' % n, '%d' % n)
-		nodes.append(n)
-		if n % 2:
-			nextN = 3 * n + 1
-		else:
-			nextN = n / 2
-		collatz_draw(nextN)
-		graph.edge('%d' % n, '%d' % nextN)
+	if not args.skip6 or n % 6:
+		if not n in nodes:
+			graph.node('%d' % n, '%d' % n)
+			nodes.append(n)
+			if n % 2:
+				nextN = 3 * n + 1
+			else:
+				nextN = n / 2
+			collatz_draw(nextN)
+			graph.edge('%d' % n, '%d' % nextN)
 
 ############
 ## Main
