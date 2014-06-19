@@ -52,6 +52,7 @@ def collatz_draw(n):
 
 graph = Digraph()
 
+n = 1
 while args.continuous:
 	print('Working on %d...' % n)
 	collatz_draw(n)
@@ -61,6 +62,7 @@ while args.continuous:
 	if not n % args.sleep:
 		print('Sleeping to avoid overload.')
 		sleep(5)
+	n += 1
 
 for n in range(1, args.max + 1):
 	print('Working on %d...' % n)
