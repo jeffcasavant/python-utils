@@ -17,7 +17,7 @@ parser.add_argument('-m', '--max', type=int, metavar='N',
 parser.add_argument('-6', '--skip6', action='store_true', default=False,
 	help='Skip numbers divisible by 6.')
 
-parser.add_argument('-r', '--render', help='Render interval')
+parser.add_argument('-r', '--render', type=int, help='Render interval')
 
 parser.add_argument('-c', '--continuous', action='store_true', default=False,
 	help='Continous')
