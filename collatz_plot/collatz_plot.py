@@ -3,6 +3,7 @@
 import argparse
 # Import graphviz
 from graphviz import Digraph
+from time import sleep
 
 ###########
 ## Cmd-line args
@@ -15,6 +16,13 @@ parser.add_argument('-m', '--max', type=int, metavar='N',
 
 parser.add_argument('-6', '--skip6', action='store_true', default=False,
 	help='Skip numbers divisible by 6.')
+
+parser.add_argument('-r', '--render', help='Render interval')
+
+parser.add_argument('-c', '--continuous', action='store_true', default=False,
+	help='Continous')
+
+parser.add_argument('-s', '--sleep', type=int, help='Sleep interval')
 
 parser.add_argument('-o', '--out', help='Output filename', required=True)
 
@@ -45,8 +53,14 @@ def collatz_draw(n):
 graph = Digraph()
 
 for n in range(1, args.max + 1):
-	print('Working on %s...' % n)
+	print('Working on %d...' % n)
 	collatz_draw(n)
+	if not n % args.render:
+		print('Rendering for %d...' % n)
+		graph.render(args.out)
+	if not n % args.sleep:
+		print('Sleeping to avoid overload.')
+		sleep(5)
 
 # Draw
 graph.render(args.out)
