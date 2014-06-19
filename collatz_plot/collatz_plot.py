@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(
 	description='Draw Sam\'s Collatz plot to a given number.')
 
 parser.add_argument('-m', '--max', type=int, metavar='N', 
-	help='Number to stop at. (N>=1)', required=True)
+	help='Number to stop at. (N>=1)')
 
 parser.add_argument('-6', '--skip6', action='store_true', default=False,
 	help='Skip numbers divisible by 6.')
