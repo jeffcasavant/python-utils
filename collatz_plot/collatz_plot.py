@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
-# Import graphviz
+# Import graphviz-python
 from graphviz import Digraph
 from time import sleep
 
@@ -17,7 +17,7 @@ parser.add_argument('-m', '--max', type=int, metavar='N',
 parser.add_argument('-6', '--skip6', action='store_true', default=False,
 	help='Skip numbers divisible by 6.')
 
-parser.add_argument('-r', '--render', type=int, help='Render interval')
+parser.add_argument('-i', '--interval', type=int, help='Output interval')
 
 parser.add_argument('-c', '--continuous', action='store_true', default=False,
 	help='Continous')
@@ -57,8 +57,9 @@ while args.continuous:
 	print('Working on %d...' % n)
 	collatz_draw(n)
 	if not n % args.render:
-		print('Rendering for %d...' % n)
-		graph.render(args.out + '%s' % n)
+		print('Writing DOT for %d...' % n)
+		with open(args.out + '%s' % n) as dotfile
+			dotfile.write(graph.source)
 	if not n % args.sleep:
 		print('Sleeping to avoid overload.')
 		sleep(5)
@@ -68,11 +69,9 @@ for n in range(1, args.max + 1):
 	print('Working on %d...' % n)
 	collatz_draw(n)
 	if not n % args.render:
-		print('Rendering for %d...' % n)
-		graph.render(args.out)
+		print('Writing DOT for %d...' % n)
+		with open(args.out + '%s' % n) as dotfile
+			dotfile.write(graph.source)
 	if not n % args.sleep:
 		print('Sleeping to avoid overload.')
 		sleep(5)
-
-# Draw
-graph.render(args.out)
