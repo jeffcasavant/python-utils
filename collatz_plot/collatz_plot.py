@@ -58,7 +58,7 @@ while args.continuous:
 	collatz_draw(n)
 	if not n % args.interval:
 		print('Writing DOT for %d...' % n)
-		with open(args.out + '%s' % n) as dotfile:
+		with open(args.out + '%s' % n, 'w') as dotfile:
 			dotfile.write(graph.source)
 	if not n % args.sleep:
 		print('Sleeping to avoid overload.')
@@ -69,7 +69,7 @@ for n in range(1, args.max + 1):
 	print('Working on %d...' % n)
 	collatz_draw(n)
 	if not n % args.interval:
-		print('Writing DOT for %d...' % n)
+		print('Writing DOT for %d...' % n, 'w')
 		with open(args.out + '%s' % n) as dotfile:
 			dotfile.write(graph.source)
 	if not n % args.sleep:
